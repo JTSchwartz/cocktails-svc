@@ -1,5 +1,5 @@
 steps:
-  - name: 'gcr.io/cloudbuilders/gradle'
+  - name: 'gcr.io/cloud-builders/gradle'
     args: ['jib']
     id: 'Test & Upload Image'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
