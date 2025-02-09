@@ -53,7 +53,7 @@ paths:
       parameters:
         - name: name
           in: path
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -92,7 +92,7 @@ components:
 
     Cocktail:
       type: object
-      properties: &cocktail
+      properties:
         name:
           type: string
         instructions:
@@ -116,7 +116,10 @@ components:
     CocktailCreateRequest:
       type: object
       properties:
-        <<: *cocktail
+        name:
+          type: string
+        instructions:
+          type: string
         ingredients:
           type: array
           items:
