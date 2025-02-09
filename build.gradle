@@ -6,6 +6,7 @@ plugins {
     id "org.openapi.generator" version "7.10.0"
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'jacoco'
+    id 'com.google.cloud.tools.jib' version "3.4.4"
 }
 
 group = 'com.jtschwartz'
@@ -255,5 +256,17 @@ tasks.register('scenarios', Test) {
 
     onlyIf {
         !(gradle.startParameter.taskNames.contains("pitest"))
+    }
+}
+
+jib {
+    to {
+        image = "pkg.dev/web-apps-327720/cocktails-backend"
+    }
+    from {
+        image = "eclipse-temurin:21-jre-noble"
+    }
+    container {
+        ports = ['8080']
     }
 }

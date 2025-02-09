@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/cloudbuilders/gradle'
+    args: ['jib']
+    id: 'Test & Upload Image'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: ['gcloud', 'run', 'services', 'update', 'cocktails-svc', '--region', 'us-central1', '--image', 'pkg.dev/web-apps-327720/cocktails-backend:latest', '--set-secrets', 'DB_PWD=COCKTAILS_DB_PASSWORD']
+    id: 'Deployment'
