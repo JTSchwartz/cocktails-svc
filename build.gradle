@@ -261,7 +261,7 @@ tasks.register('scenarios', Test) {
 
 jib {
     to {
-        image = "pkg.dev/web-apps-327720/cloud-run-source-deploy/cocktails-backend"
+        image = "us-east1-docker.pkg.dev/web-apps-327720/cloud-run-source-deploy/cocktails-backend"
     }
     from {
         image = "eclipse-temurin:21-jre-noble"
