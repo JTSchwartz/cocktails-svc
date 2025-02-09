@@ -4,5 +4,5 @@ steps:
     args: ['jib']
     id: 'Build & Upload Image'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args: ['gcloud', 'run', 'services', 'update', 'cocktails-svc', '--region', 'us-central1', '--image', 'pkg.dev/web-apps-327720/cloud-run-source-deploy/cocktails-backend:latest', '--set-secrets', 'DB_PWD=COCKTAILS_DB_PASSWORD']
+    args: ['gcloud', 'run', 'services', 'update', 'cocktails-svc', '--region', 'us-east1', '--image', 'us-east1-docker.pkg.dev/web-apps-327720/cloud-run-source-deploy/cocktails-backend:latest', '--set-secrets', 'DB_PWD=COCKTAILS_DB_PASSWORD']
     id: 'Deployment'
