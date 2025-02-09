@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      collection-prefix: local

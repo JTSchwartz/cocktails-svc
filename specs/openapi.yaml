@@ -1,0 +1,43 @@
+openapi: 3.1.0
+info:
+  title: Cocktails Service
+  version: 1.0.0
+paths:
+  /api/v1/cocktails:
+    get:
+      tags:
+        - Cocktails
+      summary: Get cocktails
+      operationId: getCocktails
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocktailListResponse"
+components:
+  schemas:
+    Cocktail:
+      type: object
+      properties:
+        name:
+          type: string
+        instructions:
+          type: string
+        ingredients:
+          type: array
+          items:
+            type: string
+    CocktailResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Cocktail"
+    CocktailListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Cocktail"
