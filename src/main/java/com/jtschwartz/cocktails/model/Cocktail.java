@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Accessors(chain = true)
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -19,9 +20,9 @@ public class Cocktail {
     String id;
 
     @Indexed(unique = true)
-    final String name;
+    String name;
 
-    final String instructions;
+    String instructions;
 
-    final List<Ingredient> ingredients;
+    List<Ingredient> ingredients;
 }

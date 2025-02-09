@@ -22,15 +22,21 @@ compileJava.dependsOn tasks.openApiGenerate
 
 openApiGenerate {
     generatorName.set("spring")
+
     inputSpec.set("$rootDir/specs/openapi.yaml")
     outputDir.set("$buildDir/generated")
+
     apiPackage.set("com.jtschwartz.cocktails.api.definition")
     invokerPackage.set("com.jtschwartz.cocktails.api.invoker")
     modelPackage.set("com.jtschwartz.cocktails.api.model")
+
     configOptions.put("dateLibrary", "java8")
     configOptions.put("interfaceOnly", "true")
     configOptions.put("useJakartaEe", "true")
+    configOptions.put("useOptional", "true")
     configOptions.put("openApiNullable", "false")
+
+    importMappings.put("Unit", "com.jtschwartz.cocktails.constant.Unit")
 }
 
 configurations {
@@ -111,6 +117,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Utils
+    implementation 'org.apache.commons:commons-text:1.10.0'
     implementation 'org.modelmapper:modelmapper:3.2.2'
 
     // Test
