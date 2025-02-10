@@ -7,8 +7,11 @@ import com.jtschwartz.cocktails.service.CocktailService;
 import com.jtschwartz.cocktails.util.Transformer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -19,7 +22,11 @@ public class CocktailsController implements ApiApi {
     private final Transformer transformer;
 
     @Override
-    public ResponseEntity<CocktailListResponse> getCocktails() {
+    public ResponseEntity<CocktailListResponse> getCocktails(Optional<String> name, Optional<String> ingredient) {
+        if (name.isPresent() || ingredient.isPresent()) {
+            throw new NotImplementedException();
+        }
+
         var cocktails = cocktailService.getAllCocktails().stream()
                 .map(e -> transformer.transform(e, Cocktail.class)).toList();
 

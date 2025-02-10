@@ -10,8 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
-@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document("${spring.data.mongodb.collection-prefix}-cocktails")
 public class Cocktail {
@@ -19,9 +20,9 @@ public class Cocktail {
     String id;
 
     @Indexed(unique = true)
-    final String name;
+    String name;
 
-    final String instructions;
+    String instructions;
 
-    final List<Ingredient> ingredients;
+    List<Ingredient> ingredients;
 }

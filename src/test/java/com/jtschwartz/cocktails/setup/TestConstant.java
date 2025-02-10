@@ -10,6 +10,7 @@ import java.util.UUID;
 public class TestConstant {
 
     public static Cocktail COCKTAIL = new Cocktail(
+            UUID.randomUUID().toString(),
           "Jeffery Morgenthaler's Amaretto Sour",
             "Shaken",
             List.of(

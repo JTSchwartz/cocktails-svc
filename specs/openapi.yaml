@@ -9,6 +9,17 @@ paths:
         - Cocktails
       summary: Get cocktails
       operationId: getCocktails
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ingredient
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: OK
@@ -16,8 +27,69 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CocktailListResponse"
+    post:
+      tags:
+        - Cocktails
+      summary: Create cocktail
+      operationId: createCocktail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CocktailCreateRequest"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocktailResponse"
+  /api/v1/cocktails/{name}:
+    get:
+      tags:
+        - Cocktails
+      summary: Get cocktail by name
+      operationId: getCocktail
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocktailResponse"
+  /api/v1/cocktails/im-feeling-lucky:
+    get:
+      tags:
+        - Cocktails
+      summary: I'm feeling lucky
+      operationId: getRandomCocktail
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocktailResponse"
 components:
   schemas:
+    Unit:
+      type: string
+      enum:
+        - OUNCE
+        - MILLILITER
+        - TEASPOON
+        - TABLESPOON
+        - DASH
+        - CUP
+        - GRAM
+        - ITEM
+
     Cocktail:
       type: object
       properties:
@@ -41,3 +113,29 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Cocktail"
+    CocktailCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        instructions:
+          type: string
+        ingredients:
+          type: array
+          items:
+            $ref: "#/components/schemas/Ingredient"
+    Ingredient:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: "[0-9A-Z].+"
+          minLength: 2
+          maxLength: 100
+        amount:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          format: float
+        unit:
+          $ref: "#/components/schemas/Unit"

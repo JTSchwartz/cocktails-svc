@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jtschwartz.cocktails.setup.TestUtil.assertContains;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ class CocktailsControllerTest {
     void getCocktails() {
         when(cocktailService.getAllCocktails()).thenReturn(List.of(TestConstant.COCKTAIL));
 
-        var response = classUnderTest.getCocktails();
+        var response = classUnderTest.getCocktails(Optional.empty(), Optional.empty());
 
         var result = response.getBody().getData();
         assertEquals(HttpStatus.OK, response.getStatusCode());
