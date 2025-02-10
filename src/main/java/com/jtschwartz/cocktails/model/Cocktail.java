@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document("${spring.data.mongodb.collection-prefix}-cocktails")
 public class Cocktail {
