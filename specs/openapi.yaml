@@ -26,7 +26,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CocktailListResponse"
+                $ref: "#/components/schemas/CocktailPageResponse"
+      x-spring-paginated: true
     post:
       tags:
         - Cocktails
@@ -106,13 +107,17 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Cocktail"
-    CocktailListResponse:
+    CocktailPageResponse:
       type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/Cocktail"
+      allOf:
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/schemas/PaginationResponse'
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Cocktail"
+              default: []
     CocktailCreateRequest:
       type: object
       properties:
