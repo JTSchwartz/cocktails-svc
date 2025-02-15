@@ -6,6 +6,8 @@ import com.jtschwartz.cocktails.model.Cocktail;
 import com.jtschwartz.cocktails.model.Ingredient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class CocktailService {
 
     private final CocktailRepository cocktailRepository;
 
-    public List<Cocktail> getAllCocktails() {
-        return cocktailRepository.findAll();
+    public Page<Cocktail> getAllCocktails(Pageable pageable) {
+        return cocktailRepository.findAll(pageable);
     }
 
 }
