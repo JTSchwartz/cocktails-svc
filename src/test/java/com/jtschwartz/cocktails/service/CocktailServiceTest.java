@@ -16,6 +16,7 @@ import java.util.List;
 import static com.jtschwartz.cocktails.setup.TestUtil.assertContains;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,6 +37,16 @@ class CocktailServiceTest {
 
         assertEquals(1, result.getSize());
         assertContains(TestConstant.COCKTAIL, result.getContent());
+    }
+
+    @Test
+    void getRandomCocktails() {
+        when(cocktailRepository.getRandomCocktails(anyInt())).thenReturn(List.of(TestConstant.COCKTAIL));
+
+        var result = classUnderTest.getRandomCocktails(1);
+
+        assertEquals(1, result.size());
+        assertContains(TestConstant.COCKTAIL, result);
     }
 
 }

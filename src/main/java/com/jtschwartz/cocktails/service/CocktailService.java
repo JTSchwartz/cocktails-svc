@@ -27,4 +27,8 @@ public class CocktailService {
         return cocktailRepository.findAll(pageable);
     }
 
+    public List<Cocktail> getRandomCocktails(int sampleSize) {
+        return cocktailRepository.getRandomCocktails(sampleSize);
+    }
+
 }

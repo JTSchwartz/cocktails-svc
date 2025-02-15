@@ -53,4 +53,22 @@ class CocktailsControllerTest {
         assertContains("1 Egg White", result.getFirst().getIngredients());
     }
 
+    @Test
+    void getRandomCocktail() {
+        when(cocktailService.getRandomCocktails(1)).thenReturn(List.of(TestConstant.COCKTAIL));
+
+        var response = classUnderTest.getRandomCocktail(Optional.empty());
+
+        var result = response.getBody().getData();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1, result.size());
+        assertEquals(TestConstant.COCKTAIL.getName(), result.getFirst().getName());
+        assertEquals(TestConstant.COCKTAIL.getInstructions(), result.getFirst().getInstructions());
+        assertContains("1oz Amaretto", result.getFirst().getIngredients());
+        assertContains("1oz Bourbon", result.getFirst().getIngredients());
+        assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+        assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+        assertContains("1 Egg White", result.getFirst().getIngredients());
+    }
+
 }

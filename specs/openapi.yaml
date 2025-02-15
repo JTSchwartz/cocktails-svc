@@ -70,13 +70,20 @@ paths:
         - Cocktails
       summary: I'm feeling lucky
       operationId: getRandomCocktail
+      parameters:
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: int
+            default: 1
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CocktailResponse"
+                $ref: "#/components/schemas/CocktailListResponse"
 components:
   schemas:
     Unit:
@@ -107,6 +114,13 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Cocktail"
+    CocktailListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Cocktail"
     CocktailPageResponse:
       type: object
       allOf:
