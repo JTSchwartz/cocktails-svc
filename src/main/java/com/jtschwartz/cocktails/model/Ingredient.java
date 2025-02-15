@@ -14,11 +14,13 @@ public record Ingredient(
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
     public String toString() {
+        var amountFormatted = DECIMAL_FORMAT.format(amount);
+
         if (unit == Unit.ITEM) {
-            return format("%s %s", DECIMAL_FORMAT.format(amount), name);
+            return format("%s %s", amountFormatted, name);
         } else if (unit.isOmitSpaceOnShorthand()) {
-            return format("1%s %s", unit.getShorthand(), name);
+            return format("%s%s %s", amountFormatted, unit.getShorthand(), name);
         }
-        return format("1 %s %s", unit.getShorthand(), name);
+        return format("%s %s %s", amountFormatted, unit.getShorthand(), name);
     }
 }

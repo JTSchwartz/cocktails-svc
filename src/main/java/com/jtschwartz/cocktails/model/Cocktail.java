@@ -15,7 +15,7 @@ import java.util.List;
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document("${spring.data.mongodb.collection-prefix}-cocktails")
-public class Cocktail {
+public class Cocktail implements Comparable<Cocktail> {
     @Id
     String id;
 
@@ -25,4 +25,9 @@ public class Cocktail {
     String instructions;
 
     List<Ingredient> ingredients;
+
+    @Override
+    public int compareTo(Cocktail o) {
+        return name.compareTo(o.name);
+    }
 }
