@@ -11,8 +11,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static com.jtschwartz.cocktails.setup.TestUtil.transformer;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

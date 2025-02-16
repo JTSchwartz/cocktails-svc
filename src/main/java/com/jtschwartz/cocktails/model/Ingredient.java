@@ -1,12 +1,14 @@
 package com.jtschwartz.cocktails.model;
 
 import com.jtschwartz.cocktails.constant.Unit;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 
 import java.text.DecimalFormat;
 
 import static java.lang.String.format;
 
 public record Ingredient(
+        @TextIndexed
         String name,
         Unit unit,
         float amount

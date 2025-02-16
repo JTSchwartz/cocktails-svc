@@ -6,3 +6,4 @@ spring:
       uri: mongodb+srv://cocktails_backend_svc:${DB_PWD}@maincluster.8inr8.mongodb.net/?retryWrites=true&w=majority
       database: cocktails
       collection-prefix: prod
+      auto-index-creation: true
