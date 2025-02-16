@@ -2,7 +2,6 @@ package com.jtschwartz.cocktails.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 
