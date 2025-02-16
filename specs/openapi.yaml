@@ -71,6 +71,13 @@ paths:
       operationId: searchCocktails
       x-spring-paginated: true
       parameters:
+        - name: all
+          description: >
+            Perform a Jaccardian search against names and ingredients
+          in: query
+          required: false
+          schema:
+            type: string
         - name: name
           description: >
             Perform a Jaccardian search against the provided name

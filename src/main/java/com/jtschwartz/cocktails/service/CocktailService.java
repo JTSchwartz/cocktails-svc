@@ -42,8 +42,8 @@ public class CocktailService {
         return searchBy(sortByIngredient(ingredient), pageable);
     }
 
-    public Page<Cocktail> searchByNameAndIngredient(String ingredient, Pageable pageable) {
-        return searchBy(sortByNameAndIngredient(ingredient), pageable);
+    public Page<Cocktail> searchByNameAndIngredient(String target, Pageable pageable) {
+        return searchBy(sortByNameAndIngredient(target), pageable);
     }
 
     protected Page<Cocktail> searchBy(Comparator<Cocktail> comparator, Pageable pageable) {
