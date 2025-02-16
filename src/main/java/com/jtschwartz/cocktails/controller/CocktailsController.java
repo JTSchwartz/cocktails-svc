@@ -4,16 +4,20 @@ import com.jtschwartz.cocktails.api.definition.ApiApi;
 import com.jtschwartz.cocktails.api.model.CocktailListResponse;
 import com.jtschwartz.cocktails.api.model.CocktailModel;
 import com.jtschwartz.cocktails.api.model.CocktailPageResponse;
+import com.jtschwartz.cocktails.model.Cocktail;
 import com.jtschwartz.cocktails.service.CocktailService;
 import com.jtschwartz.cocktails.util.Transformer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 @Slf4j
 @RestController
@@ -31,6 +35,23 @@ public class CocktailsController implements ApiApi {
 
         return ResponseEntity.ok(
                 transformer.transform(cocktails, CocktailPageResponse.class)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CocktailPageResponse> searchCocktails(Optional<String> all, Optional<String> name, Optional<String> ingredient, Pageable pageable) {
+        var paramCount = Stream.of(all, name, ingredient).mapToInt(opt -> opt.isPresent() ? 1 : 0).sum();
+        if (paramCount != 1) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        AtomicReference<Page<Cocktail>> cocktails = new AtomicReference<>();
+        all.ifPresent(search -> cocktails.set(cocktailService.searchByNameAndIngredient(all.get(), pageable)));
+        name.ifPresent(search -> cocktails.set(cocktailService.searchByName(name.get(), pageable)));
+        ingredient.ifPresent(search -> cocktails.set(cocktailService.searchByIngredient(ingredient.get(), pageable)));
+
+        return ResponseEntity.ok(
+                transformer.transform(cocktails.get(), CocktailPageResponse.class)
         );
     }
 
