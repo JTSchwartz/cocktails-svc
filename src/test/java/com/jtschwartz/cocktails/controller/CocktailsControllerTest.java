@@ -48,7 +48,7 @@ class CocktailsControllerTest {
   void getCocktails(List<String> filter) {
     when(cocktailService.getAllCocktails(any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
 
-    var response = classUnderTest.getCocktails(Optional.ofNullable(filter), Pageable.unpaged());
+    var response = classUnderTest.getCocktails(Optional.ofNullable(filter), Optional.empty(), Optional.empty(), Optional.empty(), Pageable.unpaged());
 
     var result = response.getContent();
     assertEquals(1, result.size());
@@ -59,6 +59,147 @@ class CocktailsControllerTest {
     assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
     assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @Test
+  void getCocktailsFiltered() {
+    when(cocktailService.filterCocktails(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.of(List.of("filter")), Optional.empty(), Optional.empty(), Optional.empty(), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @ParameterizedTest
+  @NullAndEmptySource
+  void getCocktails_All(List<String> filter) {
+    when(cocktailService.searchByNameAndIngredient(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.ofNullable(filter), Optional.of("all"), Optional.empty(), Optional.empty(), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @Test
+  void getCocktails_FilteredAll() {
+    when(cocktailService.filterAndSearchByNameAndIngredient(any(), any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.of(List.of("filter")), Optional.of("all"), Optional.empty(), Optional.empty(), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @ParameterizedTest
+  @NullAndEmptySource
+  void getCocktails_Name(List<String> filter) {
+    when(cocktailService.searchByName(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.ofNullable(filter), Optional.empty(), Optional.of("name"), Optional.empty(), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @Test
+  void getCocktails_FilteredName() {
+    when(cocktailService.filterAndSearchByName(any(), any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.of(List.of("filter")), Optional.empty(), Optional.of("name"), Optional.empty(), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @ParameterizedTest
+  @NullAndEmptySource
+  void getCocktails_Ingredient(List<String> filter) {
+    when(cocktailService.searchByIngredient(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.ofNullable(filter), Optional.empty(), Optional.empty(), Optional.of("ingredient"), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @Test
+  void getCocktails_FilteredIngredient() {
+    when(cocktailService.filterAndSearchByIngredient(any(), any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
+
+    var response = classUnderTest.getCocktails(Optional.of(List.of("filter")), Optional.empty(), Optional.empty(), Optional.of("ingredient"), Pageable.unpaged());
+
+    var result = response.getContent();
+    assertEquals(1, result.size());
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
+    assertContains("1oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  static Stream<Arguments> getCocktails_BadRequest() {
+    return Stream.of(
+        Arguments.of(Optional.of(""), Optional.of(""), Optional.of("")),
+        Arguments.of(Optional.empty(), Optional.of(""), Optional.of("")),
+        Arguments.of(Optional.of(""), Optional.empty(), Optional.of("")),
+        Arguments.of(Optional.of(""), Optional.of(""), Optional.empty())
+    );
+  }
+
+  @MethodSource
+  @ParameterizedTest
+  void getCocktails_BadRequest(Optional<String> all, Optional<String> name, Optional<String> ingredient) {
+
+    assertThrows(
+        BadRequestException.class,
+        () -> classUnderTest.getCocktails(Optional.empty(), all, name, ingredient, Pageable.unpaged())
+    );
   }
 
   @Test
@@ -75,94 +216,6 @@ class CocktailsControllerTest {
     assertContains("1oz Lemon Juice", result.getIngredients());
     assertContains("1tsp Simple Syrup", result.getIngredients());
     assertContains("1 Egg White", result.getIngredients());
-  }
-
-  @Test
-  void getCocktailsFiltered() {
-    when(cocktailService.filterCocktails(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
-
-    var response = classUnderTest.getCocktails(Optional.of(List.of("filter")), Pageable.unpaged());
-
-    var result = response.getContent();
-    assertEquals(1, result.size());
-    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
-    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
-    assertContains("1 Egg White", result.getFirst().getIngredients());
-  }
-
-  @Test
-  void searchCocktails_All() {
-    when(cocktailService.searchByNameAndIngredient(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
-
-    var response = classUnderTest.searchCocktails(Optional.of("all"), Optional.empty(), Optional.empty(), Pageable.unpaged());
-
-    var result = response.getContent();
-    assertEquals(1, result.size());
-    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
-    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
-    assertContains("1 Egg White", result.getFirst().getIngredients());
-  }
-
-  @Test
-  void searchCocktails_Name() {
-    when(cocktailService.searchByName(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
-
-    var response = classUnderTest.searchCocktails(Optional.empty(), Optional.of("name"), Optional.empty(), Pageable.unpaged());
-
-    var result = response.getContent();
-    assertEquals(1, result.size());
-    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
-    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
-    assertContains("1 Egg White", result.getFirst().getIngredients());
-  }
-
-  @Test
-  void searchCocktails_Ingredient() {
-    when(cocktailService.searchByIngredient(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
-
-    var response = classUnderTest.searchCocktails(Optional.empty(), Optional.empty(), Optional.of("ingredient"), Pageable.unpaged());
-
-    var result = response.getContent();
-    assertEquals(1, result.size());
-    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
-    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
-    assertContains("1 Egg White", result.getFirst().getIngredients());
-  }
-
-  static Stream<Arguments> searchCocktails_BadRequest() {
-    return Stream.of(
-        Arguments.of(Optional.of(""), Optional.of(""), Optional.of("")),
-        Arguments.of(Optional.empty(), Optional.of(""), Optional.of("")),
-        Arguments.of(Optional.of(""), Optional.empty(), Optional.of("")),
-        Arguments.of(Optional.of(""), Optional.of(""), Optional.empty()),
-        Arguments.of(Optional.empty(), Optional.empty(), Optional.empty())
-    );
-  }
-
-  @MethodSource
-  @ParameterizedTest
-  void searchCocktails_BadRequest(Optional<String> all, Optional<String> name, Optional<String> ingredient) {
-
-    assertThrows(
-        BadRequestException.class,
-        () -> classUnderTest.searchCocktails(all, name, ingredient, Pageable.unpaged())
-    );
   }
 
   @Test
