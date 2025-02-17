@@ -111,8 +111,10 @@ class CocktailServiceTest {
 
     assertEquals(2, page0.getTotalPages());
     assertEquals(2, page1.getTotalPages());
-    assertEquals(2, page0.getNumberOfElements());
-    assertEquals(2, page1.getNumberOfElements());
+    assertEquals(2, page0.getTotalElements());
+    assertEquals(2, page1.getTotalElements());
+    assertEquals(1, page0.getNumberOfElements());
+    assertEquals(1, page1.getNumberOfElements());
     assertEquals(1, page0.getSize());
     assertEquals(1, page1.getSize());
     assertContains(first, page0.getContent());
@@ -132,8 +134,10 @@ class CocktailServiceTest {
 
     assertEquals(2, page0.getTotalPages());
     assertEquals(2, page1.getTotalPages());
-    assertEquals(2, page0.getNumberOfElements());
-    assertEquals(2, page1.getNumberOfElements());
+    assertEquals(2, page0.getTotalElements());
+    assertEquals(2, page1.getTotalElements());
+    assertEquals(1, page0.getNumberOfElements());
+    assertEquals(1, page1.getNumberOfElements());
     assertEquals(1, page0.getSize());
     assertEquals(1, page1.getSize());
     assertContains(first, page0.getContent());

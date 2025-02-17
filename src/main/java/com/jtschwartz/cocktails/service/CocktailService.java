@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.jtschwartz.cocktails.util.CocktailUtil.*;
+import static java.lang.Math.min;
 
 @Slf4j
 @Service
@@ -70,7 +71,11 @@ public class CocktailService {
   protected Page<Cocktail> searchBy(List<Cocktail> cocktails, Comparator<Cocktail> comparator, Pageable pageable) {
     cocktails.sort(comparator);
 
-    return new PageImpl<>(cocktails, pageable, cocktails.size());
+    var start = (int) pageable.getOffset();
+    var end = min(start + pageable.getPageSize(), cocktails.size());
+    var content = cocktails.subList(start, end);
+
+    return new PageImpl<>(content, pageable, cocktails.size());
   }
 
 }
