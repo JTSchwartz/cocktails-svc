@@ -1,6 +1,9 @@
 package com.jtschwartz.cocktails.controller;
 
+import com.jtschwartz.cocktails.api.model.CocktailCreateRequest;
+import com.jtschwartz.cocktails.constant.Unit;
 import com.jtschwartz.cocktails.exception.BadRequestException;
+import com.jtschwartz.cocktails.model.Cocktail;
 import com.jtschwartz.cocktails.service.CocktailService;
 import com.jtschwartz.cocktails.setup.TestConstant;
 import com.jtschwartz.cocktails.util.Transformer;
@@ -10,9 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,6 +43,9 @@ class CocktailsControllerTest {
   @Spy
   @InjectMocks
   CocktailsController classUnderTest;
+
+  @Captor
+  ArgumentCaptor<Cocktail> cocktailCaptor;
 
   @ParameterizedTest
   @NullAndEmptySource
@@ -232,6 +237,50 @@ class CocktailsControllerTest {
     assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
     assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
+  }
+
+  @Test
+  void createCocktail() {
+    var createRequest = transformer.transform(TestConstant.SOUTHSIDE, CocktailCreateRequest.class);
+
+    when(cocktailService.storeCocktail(any())).thenReturn(TestConstant.AMARETTO_SOUR);
+
+    var response = classUnderTest.createCocktail(createRequest);
+
+    var result = response.getData();
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getInstructions());
+    assertContains("1oz Amaretto", result.getIngredients());
+    assertContains("1oz Bourbon", result.getIngredients());
+    assertContains("1oz Lemon Juice", result.getIngredients());
+    assertContains("1tsp Simple Syrup", result.getIngredients());
+    assertContains("1 Egg White", result.getIngredients());
+
+    verify(cocktailService).storeCocktail(cocktailCaptor.capture());
+    var input = cocktailCaptor.getValue();
+
+    var gin = input.getIngredients().get(0);
+    var simpleSyrup = input.getIngredients().get(1);
+    var lemonJuice = input.getIngredients().get(2);
+    var mintLeaves = input.getIngredients().get(3);
+    assertEquals(TestConstant.SOUTHSIDE.getName(), input.getName());
+    assertEquals(TestConstant.SOUTHSIDE.getInstructions(), input.getInstructions());
+
+    assertEquals(2, gin.amount());
+    assertEquals(Unit.OUNCE, gin.unit());
+    assertEquals("Gin", gin.name());
+
+    assertEquals(0.75f, simpleSyrup.amount());
+    assertEquals(Unit.OUNCE, simpleSyrup.unit());
+    assertEquals("Simple Syrup", simpleSyrup.name());
+
+    assertEquals(1, lemonJuice.amount());
+    assertEquals(Unit.OUNCE, lemonJuice.unit());
+    assertEquals("Lemon Juice", lemonJuice.name());
+
+    assertEquals(6, mintLeaves.amount());
+    assertEquals(Unit.ITEM, mintLeaves.unit());
+    assertEquals("Mint Leaves", mintLeaves.name());
   }
 
 }

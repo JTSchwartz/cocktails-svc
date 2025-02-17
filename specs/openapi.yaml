@@ -54,6 +54,7 @@ paths:
       summary: Create cocktail
       operationId: createCocktail
       requestBody:
+        required: true
         content:
           application/json:
             schema:
