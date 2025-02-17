@@ -36,6 +36,10 @@ public class CocktailService {
     return cocktailRepository.getRandomCocktails(sampleSize);
   }
 
+  public Cocktail storeCocktail(Cocktail cocktail) {
+    return cocktailRepository.save(cocktail);
+  }
+
   public Page<Cocktail> filterCocktails(List<String> filter, Pageable pageable) {
     return cocktailRepository.filterCocktails(Strings.join(filter, ' '), pageable);
   }

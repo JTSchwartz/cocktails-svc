@@ -122,6 +122,7 @@ dependencies {
     // Utils
     implementation 'org.apache.commons:commons-text:1.10.0'
     implementation 'org.modelmapper:modelmapper:3.2.2'
+    implementation 'org.modelmapper:modelmapper-module-record:1.0.0'
 
     // Test
 //    testImplementation 'org.testcontainers:gcloud'

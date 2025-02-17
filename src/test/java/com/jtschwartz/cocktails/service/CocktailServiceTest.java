@@ -78,6 +78,15 @@ class CocktailServiceTest {
   }
 
   @Test
+  void storeCocktail() {
+    when(cocktailRepository.save(any())).thenReturn(TestConstant.AMARETTO_SOUR);
+
+    var result = classUnderTest.storeCocktail(SOUTHSIDE);
+
+    assertEquals(TestConstant.AMARETTO_SOUR, result);
+  }
+
+  @Test
   void filterCocktails() {
     var expected = "mint bourbon";
 

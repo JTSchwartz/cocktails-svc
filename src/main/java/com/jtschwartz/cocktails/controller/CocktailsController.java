@@ -1,6 +1,7 @@
 package com.jtschwartz.cocktails.controller;
 
 import com.jtschwartz.cocktails.api.definition.ApiApi;
+import com.jtschwartz.cocktails.api.model.CocktailCreateRequest;
 import com.jtschwartz.cocktails.api.model.CocktailListResponse;
 import com.jtschwartz.cocktails.api.model.CocktailModel;
 import com.jtschwartz.cocktails.api.model.CocktailPageResponse;
@@ -73,5 +74,14 @@ public class CocktailsController implements ApiApi {
         .map(cocktail -> transformer.transform(cocktail, CocktailModel.class)).toList();
 
     return new CocktailListResponse().data(cocktails);
+  }
+
+  @Override
+  public CocktailResponse createCocktail(CocktailCreateRequest cocktailCreateRequest) {
+    var cocktail = transformer.transform(cocktailCreateRequest, Cocktail.class);
+
+    var storedCocktail = cocktailService.storeCocktail(cocktail);
+
+    return new CocktailResponse().data(transformer.transform(storedCocktail, CocktailModel.class));
   }
 }
