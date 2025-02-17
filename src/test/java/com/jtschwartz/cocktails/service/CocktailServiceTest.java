@@ -119,6 +119,27 @@ class CocktailServiceTest {
     assertContains(second, page1.getContent());
   }
 
+  @ParameterizedTest
+  @MethodSource("searchByName")
+  void filterAndSearchByName(String search, Cocktail first, Cocktail second) {
+    when(cocktailRepository.filterCocktails(anyString())).thenReturn(COCKTAILS);
+
+    var pageable0 = PageRequest.of(0, 1);
+    var pageable1 = PageRequest.of(1, 1);
+
+    var page0 = classUnderTest.filterAndSearchByName(List.of("filter"), search, pageable0);
+    var page1 = classUnderTest.filterAndSearchByName(List.of("filter"), search, pageable1);
+
+    assertEquals(2, page0.getTotalPages());
+    assertEquals(2, page1.getTotalPages());
+    assertEquals(2, page0.getNumberOfElements());
+    assertEquals(2, page1.getNumberOfElements());
+    assertEquals(1, page0.getSize());
+    assertEquals(1, page1.getSize());
+    assertContains(first, page0.getContent());
+    assertContains(second, page1.getContent());
+  }
+
   static Stream<Arguments> searchByIngredient() {
     return Stream.of(
         Arguments.of("mitn", SOUTHSIDE),
@@ -132,6 +153,16 @@ class CocktailServiceTest {
     when(cocktailRepository.findAll()).thenReturn(COCKTAILS);
 
     var result = classUnderTest.searchByIngredient(search, PageRequest.of(0, 1));
+
+    assertEquals(cocktail, result.getContent().getFirst());
+  }
+
+  @ParameterizedTest
+  @MethodSource("searchByIngredient")
+  void filterAndSearchByIngredient(String search, Cocktail cocktail) {
+    when(cocktailRepository.filterCocktails(anyString())).thenReturn(COCKTAILS);
+
+    var result = classUnderTest.filterAndSearchByIngredient(List.of("filter"), search, PageRequest.of(0, 1));
 
     assertEquals(cocktail, result.getContent().getFirst());
   }
@@ -151,6 +182,16 @@ class CocktailServiceTest {
     when(cocktailRepository.findAll()).thenReturn(COCKTAILS);
 
     var result = classUnderTest.searchByNameAndIngredient(search, PageRequest.of(0, 1));
+
+    assertEquals(cocktail, result.getContent().getFirst());
+  }
+
+  @ParameterizedTest
+  @MethodSource("searchByNameAndIngredient")
+  void filterAndSearchByNameAndIngredient(String search, Cocktail cocktail) {
+    when(cocktailRepository.filterCocktails(anyString())).thenReturn(COCKTAILS);
+
+    var result = classUnderTest.filterAndSearchByNameAndIngredient(List.of("filter"), search, PageRequest.of(0, 1));
 
     assertEquals(cocktail, result.getContent().getFirst());
   }

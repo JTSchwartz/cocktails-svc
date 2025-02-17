@@ -20,6 +20,27 @@ paths:
             type: array
             items:
               type: string
+        - name: all
+          description: >
+            Perform a Jaccardian search against names and ingredients
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: name
+          description: >
+            Perform a Jaccardian search against the provided name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ingredient
+          description: >
+            Perform a Jaccardian search against the provided ingredient
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: OK
@@ -63,42 +84,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CocktailResponse"
-  /api/v1/cocktails/search:
-    get:
-      tags:
-        - Cocktails
-      summary: Search cocktails
-      operationId: searchCocktails
-      x-spring-paginated: true
-      parameters:
-        - name: all
-          description: >
-            Perform a Jaccardian search against names and ingredients
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: name
-          description: >
-            Perform a Jaccardian search against the provided name
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: ingredient
-          description: >
-            Perform a Jaccardian search against the provided ingredient
-          in: query
-          required: false
-          schema:
-            type: string
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CocktailPageResponse"
   /api/v1/cocktails/im-feeling-lucky:
     get:
       tags:

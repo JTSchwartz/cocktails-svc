@@ -19,6 +19,9 @@ public interface CocktailRepository extends MongoRepository<Cocktail, String> {
   List<Cocktail> getRandomCocktails(int sample);
 
   @Query("{ $text: { $search: ?0 } }")
+  List<Cocktail> filterCocktails(String text);
+
+  @Query("{ $text: { $search: ?0 } }")
   Page<Cocktail> filterCocktails(String text, Pageable pageable);
 
   Stream<Cocktail> findAllBy();

@@ -29,10 +29,32 @@ public class CocktailsController implements ApiApi {
   private final Transformer transformer;
 
   @Override
-  public CocktailPageResponse getCocktails(Optional<List<String>> filter, Pageable pageable) {
-    var cocktails = filter.isEmpty() || filter.get().isEmpty()
-        ? cocktailService.getAllCocktails(pageable)
-        : cocktailService.filterCocktails(filter.get(), pageable);
+  public CocktailPageResponse getCocktails(Optional<List<String>> filter, Optional<String> all, Optional<String> name, Optional<String> ingredient, Pageable pageable) {
+    var paramCount = Stream.of(all, name, ingredient).mapToInt(opt -> opt.isPresent() ? 1 : 0).sum();
+    if (paramCount > 1) {
+      throw new BadRequestException("All, Name, and Ingredient are mutually exclusive.");
+    }
+
+    var filterPresent = filter.isPresent() && !filter.get().isEmpty();
+
+    Page<Cocktail> cocktails = null;
+    if (paramCount == 0) {
+      cocktails = filterPresent
+          ? cocktailService.filterCocktails(filter.get(), pageable)
+          : cocktailService.getAllCocktails(pageable);
+    } else if (all.isPresent()) {
+      cocktails = filterPresent
+          ? cocktailService.filterAndSearchByNameAndIngredient(filter.get(), all.get(), pageable)
+          : cocktailService.searchByNameAndIngredient(all.get(), pageable);
+    } else if (name.isPresent()) {
+      cocktails = filterPresent
+          ? cocktailService.filterAndSearchByName(filter.get(), name.get(), pageable)
+          : cocktailService.searchByName(name.get(), pageable);
+    } else if (ingredient.isPresent()) {
+      cocktails = filterPresent
+          ? cocktailService.filterAndSearchByIngredient(filter.get(), ingredient.get(), pageable)
+          : cocktailService.searchByIngredient(ingredient.get(), pageable);
+    }
 
     return transformer.transform(cocktails, CocktailPageResponse.class);
   }
@@ -42,21 +64,6 @@ public class CocktailsController implements ApiApi {
     var cocktail = cocktailService.getCocktail(name);
 
     return new CocktailResponse().data(transformer.transform(cocktail, CocktailModel.class));
-  }
-
-  @Override
-  public CocktailPageResponse searchCocktails(Optional<String> all, Optional<String> name, Optional<String> ingredient, Pageable pageable) {
-    var paramCount = Stream.of(all, name, ingredient).mapToInt(opt -> opt.isPresent() ? 1 : 0).sum();
-    if (paramCount != 1) {
-      throw new BadRequestException("Only one parameter may be specified");
-    }
-
-    AtomicReference<Page<Cocktail>> cocktails = new AtomicReference<>();
-    all.ifPresent(search -> cocktails.set(cocktailService.searchByNameAndIngredient(all.get(), pageable)));
-    name.ifPresent(search -> cocktails.set(cocktailService.searchByName(name.get(), pageable)));
-    ingredient.ifPresent(search -> cocktails.set(cocktailService.searchByIngredient(ingredient.get(), pageable)));
-
-    return transformer.transform(cocktails.get(), CocktailPageResponse.class);
   }
 
   @Override

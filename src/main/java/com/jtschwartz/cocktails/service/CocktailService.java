@@ -39,20 +39,35 @@ public class CocktailService {
     return cocktailRepository.filterCocktails(Strings.join(filter, ' '), pageable);
   }
 
+  public List<Cocktail> filterCocktails(List<String> filter) {
+    return cocktailRepository.filterCocktails(Strings.join(filter, ' '));
+  }
+
   public Page<Cocktail> searchByName(String name, Pageable pageable) {
-    return searchBy(sortByName(name), pageable);
+    return searchBy(cocktailRepository.findAll(), sortByName(name), pageable);
+  }
+
+  public Page<Cocktail> filterAndSearchByName(List<String> filter, String name, Pageable pageable) {
+    return searchBy(filterCocktails(filter), sortByName(name), pageable);
   }
 
   public Page<Cocktail> searchByIngredient(String ingredient, Pageable pageable) {
-    return searchBy(sortByIngredient(ingredient), pageable);
+    return searchBy(cocktailRepository.findAll(), sortByIngredient(ingredient), pageable);
+  }
+
+  public Page<Cocktail> filterAndSearchByIngredient(List<String> filter, String ingredient, Pageable pageable) {
+    return searchBy(filterCocktails(filter), sortByIngredient(ingredient), pageable);
   }
 
   public Page<Cocktail> searchByNameAndIngredient(String target, Pageable pageable) {
-    return searchBy(sortByNameAndIngredient(target), pageable);
+    return searchBy(cocktailRepository.findAll(), sortByNameAndIngredient(target), pageable);
   }
 
-  protected Page<Cocktail> searchBy(Comparator<Cocktail> comparator, Pageable pageable) {
-    var cocktails = cocktailRepository.findAll();
+  public Page<Cocktail> filterAndSearchByNameAndIngredient(List<String> filter, String target, Pageable pageable) {
+    return searchBy(filterCocktails(filter), sortByNameAndIngredient(target), pageable);
+  }
+
+  protected Page<Cocktail> searchBy(List<Cocktail> cocktails, Comparator<Cocktail> comparator, Pageable pageable) {
     cocktails.sort(comparator);
 
     return new PageImpl<>(cocktails, pageable, cocktails.size());
