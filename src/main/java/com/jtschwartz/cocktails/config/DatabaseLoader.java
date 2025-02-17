@@ -13,16 +13,17 @@ import java.util.List;
 @Configuration
 public class DatabaseLoader {
 
-    @Bean
-    CommandLineRunner initDb(CocktailRepository cocktailRepository) {
-        var initCocktail = new Cocktail()
-                .setName("Init")
-                .setInstructions("Init")
-                .setIngredients(List.of(new Ingredient("Init", Unit.ITEM, 1)));
+  @Bean
+  CommandLineRunner initDb(CocktailRepository cocktailRepository) {
+    var initCocktail = new Cocktail()
+        .setName("Init")
+        .setInstructions("Init")
+        .setIngredients(List.of(new Ingredient("Init", Unit.ITEM, 1)));
 
-        var document = cocktailRepository.insert(initCocktail);
-        cocktailRepository.delete(document);
-        return args -> {};
-    }
+    var document = cocktailRepository.insert(initCocktail);
+    cocktailRepository.delete(document);
+    return args -> {
+    };
+  }
 
 }

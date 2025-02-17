@@ -8,21 +8,21 @@ import java.text.DecimalFormat;
 import static java.lang.String.format;
 
 public record Ingredient(
-        @TextIndexed
-        String name,
-        Unit unit,
-        float amount
+    @TextIndexed
+    String name,
+    Unit unit,
+    float amount
 ) {
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
-    public String toString() {
-        var amountFormatted = DECIMAL_FORMAT.format(amount);
+  public String toString() {
+    var amountFormatted = DECIMAL_FORMAT.format(amount);
 
-        if (unit == Unit.ITEM) {
-            return format("%s %s", amountFormatted, name);
-        } else if (unit.isOmitSpaceOnShorthand()) {
-            return format("%s%s %s", amountFormatted, unit.getShorthand(), name);
-        }
-        return format("%s %s %s", amountFormatted, unit.getShorthand(), name);
+    if (unit == Unit.ITEM) {
+      return format("%s %s", amountFormatted, name);
+    } else if (unit.isOmitSpaceOnShorthand()) {
+      return format("%s%s %s", amountFormatted, unit.getShorthand(), name);
     }
+    return format("%s %s %s", amountFormatted, unit.getShorthand(), name);
+  }
 }
