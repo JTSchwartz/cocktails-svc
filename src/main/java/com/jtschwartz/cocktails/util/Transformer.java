@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Transformer {
 
-    private final ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
-    public <T> T transform(Object src, Class<T> destClass) {
-        try {
-            return modelMapper.map(src, destClass);
-        } catch (Exception e) {
-            log.error("Unable to map {} to {}", src.getClass(), destClass, e);
-            throw new RuntimeException(e);
-        }
+  public <T> T transform(Object src, Class<T> destClass) {
+    try {
+      return modelMapper.map(src, destClass);
+    } catch (Exception e) {
+      log.error("Unable to map {} to {}", src.getClass(), destClass, e);
+      throw new RuntimeException(e);
     }
+  }
 }

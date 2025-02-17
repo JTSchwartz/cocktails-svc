@@ -1,6 +1,7 @@
 package com.jtschwartz.cocktails.service;
 
 import com.jtschwartz.cocktails.data.CocktailRepository;
+import com.jtschwartz.cocktails.exception.NotFoundException;
 import com.jtschwartz.cocktails.model.Cocktail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,37 +21,41 @@ import static com.jtschwartz.cocktails.util.CocktailUtil.*;
 @RequiredArgsConstructor
 public class CocktailService {
 
-    private final CocktailRepository cocktailRepository;
+  private final CocktailRepository cocktailRepository;
 
-    public Page<Cocktail> getAllCocktails(Pageable pageable) {
-        return cocktailRepository.findAll(pageable);
-    }
+  public Page<Cocktail> getAllCocktails(Pageable pageable) {
+    return cocktailRepository.findAll(pageable);
+  }
 
-    public List<Cocktail> getRandomCocktails(int sampleSize) {
-        return cocktailRepository.getRandomCocktails(sampleSize);
-    }
+  public Cocktail getCocktail(String name) {
+    return cocktailRepository.findByName(name).orElseThrow(() -> new NotFoundException(name));
+  }
 
-    public Page<Cocktail> filterCocktails(List<String> filter, Pageable pageable) {
-        return cocktailRepository.filterCocktails(Strings.join(filter, ' '), pageable);
-    }
+  public List<Cocktail> getRandomCocktails(int sampleSize) {
+    return cocktailRepository.getRandomCocktails(sampleSize);
+  }
 
-    public Page<Cocktail> searchByName(String name, Pageable pageable) {
-        return searchBy(sortByName(name), pageable);
-    }
+  public Page<Cocktail> filterCocktails(List<String> filter, Pageable pageable) {
+    return cocktailRepository.filterCocktails(Strings.join(filter, ' '), pageable);
+  }
 
-    public Page<Cocktail> searchByIngredient(String ingredient, Pageable pageable) {
-        return searchBy(sortByIngredient(ingredient), pageable);
-    }
+  public Page<Cocktail> searchByName(String name, Pageable pageable) {
+    return searchBy(sortByName(name), pageable);
+  }
 
-    public Page<Cocktail> searchByNameAndIngredient(String target, Pageable pageable) {
-        return searchBy(sortByNameAndIngredient(target), pageable);
-    }
+  public Page<Cocktail> searchByIngredient(String ingredient, Pageable pageable) {
+    return searchBy(sortByIngredient(ingredient), pageable);
+  }
 
-    protected Page<Cocktail> searchBy(Comparator<Cocktail> comparator, Pageable pageable) {
-        var cocktails = cocktailRepository.findAll();
-        cocktails.sort(comparator);
+  public Page<Cocktail> searchByNameAndIngredient(String target, Pageable pageable) {
+    return searchBy(sortByNameAndIngredient(target), pageable);
+  }
 
-        return new PageImpl<>(cocktails, pageable, cocktails.size());
-    }
+  protected Page<Cocktail> searchBy(Comparator<Cocktail> comparator, Pageable pageable) {
+    var cocktails = cocktailRepository.findAll();
+    cocktails.sort(comparator);
+
+    return new PageImpl<>(cocktails, pageable, cocktails.size());
+  }
 
 }

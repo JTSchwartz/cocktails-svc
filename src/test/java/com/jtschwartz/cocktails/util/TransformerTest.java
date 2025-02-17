@@ -17,21 +17,21 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TransformerTest {
 
-    @Mock
-    ModelMapper modelMapper;
+  @Mock
+  ModelMapper modelMapper;
 
-    @Spy
-    @InjectMocks
-    Transformer classUnderTest;
+  @Spy
+  @InjectMocks
+  Transformer classUnderTest;
 
-    @Test
-    void transform_SadPath() {
-        when(modelMapper.map("expected", Object.class)).thenThrow(new MappingException(List.of()));
+  @Test
+  void transform_SadPath() {
+    when(modelMapper.map("expected", Object.class)).thenThrow(new MappingException(List.of()));
 
-        assertThrows(
-                RuntimeException.class,
-                () -> classUnderTest.transform("expected", Object.class)
-        );
-    }
+    assertThrows(
+        RuntimeException.class,
+        () -> classUnderTest.transform("expected", Object.class)
+    );
+  }
 
 }

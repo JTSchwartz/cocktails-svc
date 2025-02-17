@@ -8,16 +8,19 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public interface CocktailRepository extends MongoRepository<Cocktail,String> {
+public interface CocktailRepository extends MongoRepository<Cocktail, String> {
 
-    @Aggregation("{ $sample: { size: ?0 } }")
-    List<Cocktail> getRandomCocktails(int sample);
+  Optional<Cocktail> findByName(String name);
 
-    @Query("{ $text: { $search: ?0 } }")
-    Page<Cocktail> filterCocktails(String text, Pageable pageable);
+  @Aggregation("{ $sample: { size: ?0 } }")
+  List<Cocktail> getRandomCocktails(int sample);
 
-    Stream<Cocktail> findAllBy();
+  @Query("{ $text: { $search: ?0 } }")
+  Page<Cocktail> filterCocktails(String text, Pageable pageable);
+
+  Stream<Cocktail> findAllBy();
 
 }

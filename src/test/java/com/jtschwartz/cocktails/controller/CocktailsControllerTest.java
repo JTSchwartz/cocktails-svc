@@ -1,5 +1,6 @@
 package com.jtschwartz.cocktails.controller;
 
+import com.jtschwartz.cocktails.exception.BadRequestException;
 import com.jtschwartz.cocktails.service.CocktailService;
 import com.jtschwartz.cocktails.setup.TestConstant;
 import com.jtschwartz.cocktails.util.Transformer;
@@ -24,7 +25,9 @@ import java.util.stream.Stream;
 import static com.jtschwartz.cocktails.setup.TestUtil.assertContains;
 import static com.jtschwartz.cocktails.setup.TestUtil.transformer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,8 +50,7 @@ class CocktailsControllerTest {
 
     var response = classUnderTest.getCocktails(Optional.ofNullable(filter), Pageable.unpaged());
 
-    var result = response.getBody().getContent();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    var result = response.getContent();
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
@@ -60,13 +62,28 @@ class CocktailsControllerTest {
   }
 
   @Test
+  void getCocktail() {
+    when(cocktailService.getCocktail(anyString())).thenReturn(TestConstant.AMARETTO_SOUR);
+
+    var response = classUnderTest.getCocktail("cocktail");
+
+    var result = response.getData();
+    assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getName());
+    assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getInstructions());
+    assertContains("1oz Amaretto", result.getIngredients());
+    assertContains("1oz Bourbon", result.getIngredients());
+    assertContains("1oz Lemon Juice", result.getIngredients());
+    assertContains("1tsp Simple Syrup", result.getIngredients());
+    assertContains("1 Egg White", result.getIngredients());
+  }
+
+  @Test
   void getCocktailsFiltered() {
     when(cocktailService.filterCocktails(any(), any())).thenReturn(new PageImpl<>(List.of(TestConstant.AMARETTO_SOUR)));
 
     var response = classUnderTest.getCocktails(Optional.of(List.of("filter")), Pageable.unpaged());
 
-    var result = response.getBody().getContent();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    var result = response.getContent();
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
@@ -83,8 +100,7 @@ class CocktailsControllerTest {
 
     var response = classUnderTest.searchCocktails(Optional.of("all"), Optional.empty(), Optional.empty(), Pageable.unpaged());
 
-    var result = response.getBody().getContent();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    var result = response.getContent();
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
@@ -101,8 +117,7 @@ class CocktailsControllerTest {
 
     var response = classUnderTest.searchCocktails(Optional.empty(), Optional.of("name"), Optional.empty(), Pageable.unpaged());
 
-    var result = response.getBody().getContent();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    var result = response.getContent();
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
@@ -119,8 +134,7 @@ class CocktailsControllerTest {
 
     var response = classUnderTest.searchCocktails(Optional.empty(), Optional.empty(), Optional.of("ingredient"), Pageable.unpaged());
 
-    var result = response.getBody().getContent();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    var result = response.getContent();
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
@@ -133,20 +147,22 @@ class CocktailsControllerTest {
 
   static Stream<Arguments> searchCocktails_BadRequest() {
     return Stream.of(
-      Arguments.of(Optional.of(""), Optional.of(""), Optional.of("")),
-      Arguments.of(Optional.empty(), Optional.of(""), Optional.of("")),
-      Arguments.of(Optional.of(""), Optional.empty(), Optional.of("")),
-      Arguments.of(Optional.of(""), Optional.of(""), Optional.empty()),
-      Arguments.of(Optional.empty(), Optional.empty(), Optional.empty())
+        Arguments.of(Optional.of(""), Optional.of(""), Optional.of("")),
+        Arguments.of(Optional.empty(), Optional.of(""), Optional.of("")),
+        Arguments.of(Optional.of(""), Optional.empty(), Optional.of("")),
+        Arguments.of(Optional.of(""), Optional.of(""), Optional.empty()),
+        Arguments.of(Optional.empty(), Optional.empty(), Optional.empty())
     );
   }
 
   @MethodSource
   @ParameterizedTest
   void searchCocktails_BadRequest(Optional<String> all, Optional<String> name, Optional<String> ingredient) {
-    var response = classUnderTest.searchCocktails(all, name, ingredient, Pageable.unpaged());
 
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertThrows(
+        BadRequestException.class,
+        () -> classUnderTest.searchCocktails(all, name, ingredient, Pageable.unpaged())
+    );
   }
 
   @Test
@@ -155,8 +171,7 @@ class CocktailsControllerTest {
 
     var response = classUnderTest.getRandomCocktail(Optional.empty());
 
-    var result = response.getBody().getData();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    var result = response.getData();
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());

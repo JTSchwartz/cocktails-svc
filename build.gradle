@@ -36,6 +36,7 @@ openApiGenerate {
     configOptions.put("openApiNullable", "false")
     configOptions.put("useJakartaEe", "true")
     configOptions.put("useOptional", "true")
+    configOptions.put("useResponseEntity", "false")
 
     importMappings.put("Unit", "com.jtschwartz.cocktails.constant.Unit")
 }

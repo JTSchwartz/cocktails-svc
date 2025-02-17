@@ -8,14 +8,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelMapperConfig {
 
-    @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        return configureModelMapper(modelMapper);
-    }
+  @Bean
+  public ModelMapper modelMapper() {
+    ModelMapper modelMapper = new ModelMapper();
+    return configureModelMapper(modelMapper);
+  }
 
-    public ModelMapper configureModelMapper(ModelMapper modelMapper) {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return modelMapper;
-    }
+  public ModelMapper configureModelMapper(ModelMapper modelMapper) {
+    modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    return modelMapper;
+  }
 }

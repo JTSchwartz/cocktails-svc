@@ -20,19 +20,19 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document("${spring.data.mongodb.collection-prefix}-cocktails")
 public class Cocktail implements Comparable<Cocktail> {
-    @Id
-    String id;
+  @Id
+  String id;
 
-    @TextIndexed(weight = 2)
-    @Indexed(unique = true)
-    String name;
+  @TextIndexed(weight = 2)
+  @Indexed(unique = true)
+  String name;
 
-    String instructions;
+  String instructions;
 
-    List<Ingredient> ingredients;
+  List<Ingredient> ingredients;
 
-    @Override
-    public int compareTo(Cocktail o) {
-        return name.compareTo(o.name);
-    }
+  @Override
+  public int compareTo(Cocktail o) {
+    return name.compareTo(o.name);
+  }
 }
