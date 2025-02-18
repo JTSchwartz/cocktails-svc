@@ -58,10 +58,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -75,10 +75,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -93,10 +93,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -110,10 +110,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -128,10 +128,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -145,10 +145,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -163,10 +163,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -180,10 +180,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -215,10 +215,10 @@ class CocktailsControllerTest {
     var result = response.getData();
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getInstructions());
-    assertContains("1oz Amaretto", result.getIngredients());
-    assertContains("1oz Bourbon", result.getIngredients());
-    assertContains("1oz Lemon Juice", result.getIngredients());
-    assertContains("1tsp Simple Syrup", result.getIngredients());
+    assertContains("1 oz Amaretto", result.getIngredients());
+    assertContains("1 oz Bourbon", result.getIngredients());
+    assertContains("1 oz Lemon Juice", result.getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getIngredients());
     assertContains("1 Egg White", result.getIngredients());
   }
 
@@ -232,10 +232,10 @@ class CocktailsControllerTest {
     assertEquals(1, result.size());
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getFirst().getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getFirst().getInstructions());
-    assertContains("1oz Amaretto", result.getFirst().getIngredients());
-    assertContains("1oz Bourbon", result.getFirst().getIngredients());
-    assertContains("1oz Lemon Juice", result.getFirst().getIngredients());
-    assertContains("1tsp Simple Syrup", result.getFirst().getIngredients());
+    assertContains("1 oz Amaretto", result.getFirst().getIngredients());
+    assertContains("1 oz Bourbon", result.getFirst().getIngredients());
+    assertContains("1 oz Lemon Juice", result.getFirst().getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getFirst().getIngredients());
     assertContains("1 Egg White", result.getFirst().getIngredients());
   }
 
@@ -250,10 +250,10 @@ class CocktailsControllerTest {
     var result = response.getData();
     assertEquals(TestConstant.AMARETTO_SOUR.getName(), result.getName());
     assertEquals(TestConstant.AMARETTO_SOUR.getInstructions(), result.getInstructions());
-    assertContains("1oz Amaretto", result.getIngredients());
-    assertContains("1oz Bourbon", result.getIngredients());
-    assertContains("1oz Lemon Juice", result.getIngredients());
-    assertContains("1tsp Simple Syrup", result.getIngredients());
+    assertContains("1 oz Amaretto", result.getIngredients());
+    assertContains("1 oz Bourbon", result.getIngredients());
+    assertContains("1 oz Lemon Juice", result.getIngredients());
+    assertContains("1 tsp Simple Syrup", result.getIngredients());
     assertContains("1 Egg White", result.getIngredients());
 
     verify(cocktailService).storeCocktail(cocktailCaptor.capture());

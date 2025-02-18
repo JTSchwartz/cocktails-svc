@@ -20,8 +20,6 @@ public record Ingredient(
 
     if (unit == Unit.ITEM) {
       return format("%s %s", amountFormatted, name);
-    } else if (unit.isOmitSpaceOnShorthand()) {
-      return format("%s%s %s", amountFormatted, unit.getShorthand(), name);
     }
     return format("%s %s %s", amountFormatted, unit.getShorthand(), name);
   }

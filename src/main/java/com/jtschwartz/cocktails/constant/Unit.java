@@ -12,8 +12,8 @@ public enum Unit {
   MILLILITER("ml", "milliliter"),
   TEASPOON("tsp", "teaspoon"),
   TABLESPOON("tbsp", "tablespoon"),
-  DASH("dash", "dash", "dashes", false),
-  CUP("cup", "cup", false),
+  DASH("dash", "dash", "dashes"),
+  CUP("cup", "cup"),
   GRAM("g", "gram"),
   ITEM("", "", ""),
   ;
@@ -21,18 +21,9 @@ public enum Unit {
   private final String shorthand;
   private final String singular;
   private final String plural;
-  private final boolean omitSpaceOnShorthand;
 
   Unit(String shorthand, String singular) {
-    this(shorthand, singular, shorthand + 's', true);
-  }
-
-  Unit(String shorthand, String singular, boolean omitSpaceOnShorthand) {
-    this(shorthand, singular, shorthand + 's', omitSpaceOnShorthand);
-  }
-
-  Unit(String shorthand, String singular, String plural) {
-    this(shorthand, singular, plural, true);
+    this(shorthand, singular, shorthand + 's');
   }
 
   public static Unit ofShorthand(String shorthand) {

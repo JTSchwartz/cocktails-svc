@@ -17,7 +17,7 @@ class CocktailUtilTest {
   Cocktail closer = new Cocktail().setName("Spiced Amaretto Sour");
   Cocktail closest = new Cocktail().setName("Amaretto Sour");
 
-  List<Cocktail> list = List.of(close, furthest, closest, closer);
+  List<Cocktail> list = List.of(closer, furthest, closest, close);
 
   @Test
   void sortBy() {
