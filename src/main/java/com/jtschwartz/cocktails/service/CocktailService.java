@@ -73,7 +73,9 @@ public class CocktailService {
   }
 
   protected Page<Cocktail> searchBy(List<Cocktail> cocktails, Comparator<Cocktail> comparator, Pageable pageable) {
+    log.info("Before: {}", cocktails);
     cocktails.sort(comparator);
+    log.info("After: {}", cocktails);
 
     var start = (int) pageable.getOffset();
     var end = min(start + pageable.getPageSize(), cocktails.size());
